@@ -1,0 +1,249 @@
+@model IEnumerable<CineScope.Models.MovieModel>
+
+@{
+    ViewData["Title"] = "Movie Manager";
+
+    int page = ViewBag.Page ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<div class="container py-5">
+
+    <!--Search and Filter-->
+    <form method="get" asp-action="Index" class="row g-2 mb-4">
+
+        <!-- Search -->
+        <div class="col-md-5">
+            <input type="text"
+                   name="searchString"
+                   value="@ViewBag.SearchString"
+                   class="form-control"
+                   placeholder="Search movie by title..." />
+        </div>
+
+        <!-- Genre Filter -->
+        <div class="col-md-4">
+            <select name="genre" class="form-select">
+
+                <option value="">All Genres</option>
+
+                @foreach (var g in ViewBag.Genres)
+                {
+                    <option value="@g"
+                            selected="@(ViewBag.SelectedGenre == g)">
+                        @g
+                    </option>
+                }
+
+            </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-md-3 d-flex gap-2">
+
+            <button type="submit" class="btn btn-primary w-100">
+                Search
+            </button>
+
+            <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                Reset
+            </a>
+
+        </div>
+
+    </form>
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1 class="text-4xl font-bold mb-1">
+                Movie Manager
+            </h1>
+
+            <p class="text-muted">
+                Manage your movie collection
+            </p>
+        </div>
+
+        <!-- Add Button -->
+        <a asp-action="Create"
+           class="btn btn-success rounded-circle shadow d-flex align-items-center justify-content-center"
+           style="width:60px;height:60px;">
+
+            <i class="bi bi-plus-lg text-white fs-4"></i>
+
+        </a>
+
+    </div>
+
+    <!-- Table -->
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="table-responsive">
+
+            <table class="table align-middle mb-0">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Poster</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Rating</th>
+                        <th>Release Year</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @if (Model == null || !Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-5">
+                                No movies found.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var movie in Model)
+                        {
+                            <tr>
+
+                                <!-- Poster -->
+                                <td>
+                                    <img src="@movie.PosterUrl"
+                                         alt="@movie.Title"
+                                         class="poster-thumb shadow-sm" />
+                                </td>
+
+                                <!-- Title -->
+                                <td class="fw-bold">
+                                    @movie.Title
+                                </td>
+
+                                <!-- Genre -->
+                                <td>
+                                    <span class="badge bg-primary px-3 py-2">
+                                        @movie.Genre
+                                    </span>
+                                </td>
+
+                                <!-- Rating -->
+                                <td>
+                                    <span class="text-warning fw-bold">
+                                        ★ @movie.Rating
+                                    </span>
+                                </td>
+
+                                <!-- Year -->
+                                <td>
+                                    @movie.ReleaseYear
+                                </td>
+
+                               <!-- Actions -->
+                                <td class="text-center">
+
+                                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+
+                                        <!-- Details -->
+                                        <a asp-action="Details"
+                                           asp-route-id="@movie.Id"
+                                           class="btn btn-primary btn-sm shadow-sm d-flex align-items-center gap-2">
+
+                                            <i class="bi bi-eye-fill"></i>
+                                            <span>Details</span>
+
+                                        </a>
+
+                                        <!-- Edit -->
+                                        <a asp-action="Edit"
+                                           asp-route-id="@movie.Id"
+                                           class="btn btn-warning btn-sm shadow-sm d-flex align-items-center gap-2">
+
+                                            <i class="bi bi-pencil-fill text-white"></i>
+                                            <span class="text-white">Edit</span>
+
+                                        </a>
+
+                                        <!-- Delete -->
+                                        <a asp-action="Delete"
+                                           asp-route-id="@movie.Id"
+                                           class="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-2">
+
+                                            <i class="bi bi-trash-fill"></i>
+                                            <span>Delete</span>
+
+                                        </a>
+
+                                    </div>
+
+                            </td>   
+
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- Pagination -->
+    <nav class="mt-4">
+
+        <ul class="pagination justify-content-center">
+
+            <!-- Previous -->
+            <li class="page-item @(page <= 1 ? "disabled" : "")">
+
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(page - 1)">
+
+                    Previous
+
+                </a>
+
+            </li>
+
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == page ? "active" : "")">
+
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@i">
+
+                        @i
+
+                    </a>
+
+                </li>
+            }
+
+            <!-- Next -->
+            <li class="page-item @(page >= totalPages ? "disabled" : "")">
+
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(page + 1)">
+
+                    Next
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+</div>

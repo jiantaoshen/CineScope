@@ -1,0 +1,93 @@
+﻿@model IEnumerable<CineScope.Models.MovieModel>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<div class="container py-5">
+
+    <h1 class="text-5xl font-bold text-center mb-5">
+        Movies
+    </h1>
+
+    <!--Moive Table-->
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            No movies found.
+        </div>
+    }
+    else
+    {
+        <div class="d-flex flex-column gap-4">
+
+            @foreach (var movie in Model)
+            {
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+                    <div class="row g-0">
+
+                        <!-- Poster -->
+                        <div class="col-md-3">
+                            <img src="@movie.PosterUrl"
+                                 class="img-fluid h-100 object-fit-cover"
+                                 style="min-height:350px; width:100%; object-fit:cover;"
+                                 alt="@movie.Title" />
+                        </div>
+
+                        <!-- Details -->
+                        <div class="col-md-9">
+
+                            <div class="card-body p-4">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <div>
+                                        <h2 class="text-3xl font-bold">
+                                            @movie.Title
+                                        </h2>
+
+                                        <div class="mt-2">
+
+                                            <span class="badge bg-primary me-2">
+                                                @movie.Genre
+                                            </span>
+
+                                            <span class="badge bg-dark">
+                                                @movie.ReleaseYear
+                                            </span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="text-end">
+
+                                        <div class="text-warning text-2xl font-bold">
+                                            ★ @movie.Rating
+                                        </div>
+
+                                        <div class="text-muted">
+                                            @movie.Duration min
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <p class="mt-4 text-secondary">
+                                    @movie.Description
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
