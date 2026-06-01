@@ -1,15 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 
+// Fix the decimal separator to be a dot (.) instead of a comma (,), where (,) does not work for asp-validation-for="Rating". 
 var culture = new CultureInfo("en-US");
 
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 var builder = WebApplication.CreateBuilder(args);
-
-Console.WriteLine("Application is starting...");
 
 //Add connection string for database context
 var connectionString = builder.Configuration.GetConnectionString("CineScopeContext") ?? throw new InvalidOperationException("Connection string 'CineScopeContext' not found.");

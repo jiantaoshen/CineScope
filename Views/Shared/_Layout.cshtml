@@ -42,32 +42,46 @@
                     </ul>
                 </div>
 
-                <ul class="navbar-nav ms-auto d-flex align-items-center">
+                <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
 
                     <!-- Notifications -->
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span class="position-relative d-inline-block">
-                                <i class="bi bi-bell fs-5"></i>
 
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
-                                    3
-                                </span>
+                        <a class="nav-link d-flex align-items-center position-relative"
+                           href="#">
+
+                            <i class="bi bi-bell fs-5"></i>
+
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                3
+                            </span>
+
                         </a>
+
                     </li>
 
-                    <!-- User profile -->
+                    <!-- User dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle fs-5"></i>
-                            <span>Guest</span>
+
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 py-0"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+
+                            <i class="bi bi-person-circle fs-5 d-flex align-items-center"></i>
+
+                            <span class="d-none d-md-inline">Guest</span>
+
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Logout</a></li>
                         </ul>
+
                     </li>
 
                 </ul>

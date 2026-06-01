@@ -1,8 +1,142 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<CineScope.Models.MovieModel>
+
+@{
+    ViewData["Title"] = "Home";
+    var movies = Model?.ToList() ?? new List<CineScope.Models.MovieModel>();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">🎬 Latest Movies</h1>
+        <p>Discover the latest movie</p>
+    </div>
+
+    @if (!movies.Any())
+    {
+        <div class="alert alert-warning text-center">
+            No movies found.
+        </div>
+    }
+    else
+    {
+        <div id="movieCarousel" class="carousel slide" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+
+                @for (int i = 0; i < movies.Count; i++)
+                {
+                    var movie = movies[i];
+
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                        <div class="card bg-dark text-white shadow-lg border-0 rounded-4 overflow-hidden mx-auto"
+                             style="max-width:1000px;">
+
+                            <div class="row g-0">
+
+                                <!-- Poster -->
+                                <div class="col-md-3">
+
+                                    <img src="@movie.PosterUrl"
+                                         class="img-fluid h-100"
+                                         style="min-height:350px; width:100%; object-fit:cover;"
+                                         alt="@movie.Title" />
+
+                                </div>
+
+                                <!-- Details -->
+                                <div class="col-md-9">
+
+                                    <div class="card-body p-4">
+
+                                        <div class="d-flex justify-content-between">
+
+                                            <div>
+
+                                                <h2 class="display-6 fw-bold">
+                                                    @movie.Title
+                                                </h2>
+
+                                                <div class="mt-2">
+
+                                                    <span class="badge bg-primary me-2">
+                                                        @movie.Genre
+                                                    </span>
+
+                                                    <span class="badge bg-dark">
+                                                        @movie.ReleaseYear
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="text-end">
+
+                                                <div class="text-warning fs-3 fw-bold">
+                                                    ★ @movie.Rating
+                                                </div>
+
+                                                <div class="text-muted">
+                                                    @movie.Duration min
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                        <p class="mt-4 text-secondary">
+                                            @movie.Description
+                                        </p>
+
+                                        <div class="mt-4">
+
+                                            <a asp-controller="MovieModels"
+                                               asp-action="Details"
+                                               asp-route-id="@movie.Id"
+                                               class="btn btn-primary">
+
+                                                View Details
+
+                                            </a>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+            <!-- Previous -->
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#movieCarousel"
+                    data-bs-slide="prev">
+
+                <span class="carousel-control-prev-icon"></span>
+
+            </button>
+
+            <!-- Next -->
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#movieCarousel"
+                    data-bs-slide="next">
+
+                <span class="carousel-control-next-icon"></span>
+
+            </button>
+
+        </div>
+    }
+
 </div>
