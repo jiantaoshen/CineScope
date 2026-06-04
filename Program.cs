@@ -1,36 +1,49 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using CineScope.Data;
 
-// Fix the decimal separator to be a dot (.) instead of a comma (,), where (,) does not work for asp-validation-for="Rating". 
 var culture = new CultureInfo("en-US");
-
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Add connection string for database context
-var connectionString = builder.Configuration.GetConnectionString("CineScopeContext") ?? throw new InvalidOperationException("Connection string 'CineScopeContext' not found.");
+// Connection string
+var connectionString = builder.Configuration.GetConnectionString("CineScopeContext")
+    ?? throw new InvalidOperationException("Connection string 'CineScopeContext' not found.");
 
-builder.Services.AddDbContext<CineScopeContext>(options => options.UseSqlServer(connectionString));
+// DbContext
+builder.Services.AddDbContext<CineScopeContext>(options =>
+    options.UseSqlServer(connectionString));
 
-// Add services to the container.
+// Identity
+builder.Services.AddDefaultIdentity<ApplicationUser>()
+    .AddRoles<IdentityRole>() // Add roles support
+    .AddEntityFrameworkStores<CineScopeContext>();
+
+// Razor Pages
+builder.Services.AddRazorPages();
+
+// MVC
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+// IMPORTANT ORDER IS FINE HERE
+app.MapRazorPages();
 
 app.MapStaticAssets();
 
@@ -39,5 +52,13 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+// Seed roles and users on startup - for test environment
+/*
+using (var scope = app.Services.CreateScope())
+{
+    await RoleSeeder.SeedRolesAsync(scope.ServiceProvider);
+    await UserSeeder.SeedUsersAsync(scope.ServiceProvider);
+}
+*/
 
 app.Run();

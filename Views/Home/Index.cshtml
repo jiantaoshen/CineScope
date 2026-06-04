@@ -9,7 +9,7 @@
 
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold">🎬 Latest Movies</h1>
-        <p>Discover the latest movie</p>
+        <p>Discover the latest movie releases</p>
     </div>
 
     @if (!movies.Any())
@@ -64,7 +64,7 @@
                                                         @movie.Genre
                                                     </span>
 
-                                                    <span class="badge bg-dark">
+                                                    <span class="badge bg-primary">
                                                         @movie.ReleaseYear
                                                     </span>
 
@@ -78,7 +78,7 @@
                                                     ★ @movie.Rating
                                                 </div>
 
-                                                <div class="text-muted">
+                                                <div class="text-light">
                                                     @movie.Duration min
                                                 </div>
 
@@ -86,16 +86,16 @@
 
                                         </div>
 
-                                        <p class="mt-4 text-secondary">
+                                        <p class="mt-4 text-light">
                                             @movie.Description
                                         </p>
 
-                                        <div class="mt-4">
+                                        <div class="">
 
                                             <a asp-controller="MovieModels"
                                                asp-action="Details"
                                                asp-route-id="@movie.Id"
-                                               class="btn btn-primary">
+                                               class="btn btn-primary mt-4">
 
                                                 View Details
 

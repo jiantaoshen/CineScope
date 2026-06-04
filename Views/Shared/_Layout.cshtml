@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using CineScope.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,11 +19,16 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">CineScope</a>
+
+                <h1 class="navbar-brand mb-0">
+                    <span class="text-white mb-0">Cine</span><span class="text-primary mb-0">Scope</span>
+                </h1>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
@@ -39,52 +49,19 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
+
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-warning fw-bold" asp-controller="Users" asp-action="Index">
+                                    Admin Panel
+                                </a>
+                            </li>
+                        }
                     </ul>
+
+                    <partial name="_LoginPartial" />
                 </div>
-
-                <ul class="navbar-nav ms-auto d-flex align-items-center gap-3">
-
-                    <!-- Notifications -->
-                    <li class="nav-item">
-
-                        <a class="nav-link d-flex align-items-center position-relative"
-                           href="#">
-
-                            <i class="bi bi-bell fs-5"></i>
-
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                3
-                            </span>
-
-                        </a>
-
-                    </li>
-
-                    <!-- User dropdown -->
-                    <li class="nav-item dropdown">
-
-                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 py-0"
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-
-                            <i class="bi bi-person-circle fs-5 d-flex align-items-center"></i>
-
-                            <span class="d-none d-md-inline">Guest</span>
-
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-menu-end shadow">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>
-
-                    </li>
-
-                </ul>
             </div>
         </nav>
     </header>

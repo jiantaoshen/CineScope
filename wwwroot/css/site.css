@@ -1,5 +1,7 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -10,11 +12,6 @@ html {
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
 }
 
 body {
@@ -31,13 +28,8 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
-/*Custom styles for notification badge*/
-.notification-badge {
-    font-size: 0.6rem;
-    padding: 0.15em 0.35em;
-    min-width: 1rem;
-    line-height: 1;
-}
+
+
 /*Movie List Styles*/
 .poster-thumb {
     width: 60px;
@@ -57,4 +49,8 @@ body {
 
 .table tbody tr:hover {
     background-color: #f9fafb;
+}
+
+.nav-link {
+    color: white;
 }
