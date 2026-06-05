@@ -1,66 +1,99 @@
 @model CineScope.Models.MovieModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Title;
 }
 
-<h1>Details</h1>
+<div class="container py-5">
 
-<div>
-    <h4>MovieModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ReleaseYear)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ReleaseYear)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rating)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rating)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Duration)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Duration)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PosterUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PosterUrl)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="row g-0">
+
+            <!-- Poster -->
+            <div class="col-md-4">
+
+                <img src="@Model.PosterUrl"
+                     alt="@Model.Title"
+                     class="img-fluid h-100 w-100"
+                     style="object-fit: cover; min-height: 500px;" />
+
+            </div>
+
+            <!-- Movie Information -->
+            <div class="col-md-8">
+
+                <div class="card-body p-4">
+
+                    <h1 class="fw-bold mb-3">
+                        @Model.Title
+                    </h1>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-primary fs-6 me-2">
+                            @Model.Genre
+                        </span>
+
+                        <span class="badge bg-warning text-dark fs-6">
+                            ★ @Model.Rating
+                        </span>
+
+                    </div>
+
+                    <hr />
+
+                    <h5>Description</h5>
+
+                    <p class="text-muted">
+                        @Model.Description
+                    </p>
+
+                    <div class="row mt-4">
+
+                        <div class="col-md-6 mb-3">
+
+                            <h6 class="text-secondary">
+                                Release Year
+                            </h6>
+
+                            <p class="fs-5">
+                                @Model.ReleaseYear
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <h6 class="text-secondary">
+                                Duration
+                            </h6>
+
+                            <p class="fs-5">
+                                @Model.Duration min
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            ← Back to Movies
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

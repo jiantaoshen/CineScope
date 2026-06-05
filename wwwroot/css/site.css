@@ -51,6 +51,12 @@ body {
     background-color: #f9fafb;
 }
 
+.clickable-row {
+    cursor: pointer;
+}
+
+/*Navigation Link Styles*/
 .nav-link {
     color: white;
 }
+

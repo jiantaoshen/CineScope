@@ -42,7 +42,6 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// IMPORTANT ORDER IS FINE HERE
 app.MapRazorPages();
 
 app.MapStaticAssets();
@@ -58,6 +57,7 @@ using (var scope = app.Services.CreateScope())
 {
     await RoleSeeder.SeedRolesAsync(scope.ServiceProvider);
     await UserSeeder.SeedUsersAsync(scope.ServiceProvider);
+    await MovieSeeder.SeedMoviesAsync(scope.ServiceProvider);
 }
 */
 

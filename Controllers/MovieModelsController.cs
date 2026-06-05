@@ -1,7 +1,8 @@
 
+using CineScope.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CineScope.Models;
 
 public class MovieModelsController : Controller
 {
@@ -56,6 +57,8 @@ public class MovieModelsController : Controller
         return View(movies);
     }
 
+
+
     // GET: MOVIEMODELS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
@@ -75,6 +78,7 @@ public class MovieModelsController : Controller
     }
 
     // GET: MOVIEMODELS/Create
+    [Authorize(Roles = "Admin")]
     public IActionResult Create()
     {
         return View();
@@ -85,6 +89,7 @@ public class MovieModelsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Create([Bind("Id,Title,Genre,Description,ReleaseYear,Rating,Duration,PosterUrl")] MovieModel moviemodel)
     {
         if (ModelState.IsValid)
@@ -97,6 +102,7 @@ public class MovieModelsController : Controller
     }
 
     // GET: MOVIEMODELS/Edit/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -117,6 +123,7 @@ public class MovieModelsController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Genre,Description,ReleaseYear,Rating,Duration,PosterUrl")] MovieModel moviemodel)
     {
         if (id != moviemodel.Id)
@@ -148,6 +155,7 @@ public class MovieModelsController : Controller
     }
 
     // GET: MOVIEMODELS/Delete/5
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -168,6 +176,7 @@ public class MovieModelsController : Controller
     // POST: MOVIEMODELS/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var moviemodel = await _context.MovieModel.FindAsync(id);

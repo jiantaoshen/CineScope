@@ -1,13 +1,21 @@
 @model IEnumerable<CineScope.Models.MovieModel>
+@using Microsoft.AspNetCore.Identity
+@using CineScope.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 
 @{
-    ViewData["Title"] = "Movie Manager";
+    ViewData["Title"] = "Movies";
 
     int page = ViewBag.Page ?? 1;
     int totalPages = ViewBag.TotalPages ?? 1;
 }
 
 <div class="container py-5">
+
+    <h1 class="text-4xl font-bold mb-1">
+        Movies
+    </h1>
 
     <!--Search and Filter-->
     <form method="get" asp-action="Index" class="row g-2 mb-4">
@@ -53,30 +61,23 @@
 
     </form>
 
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+    {
+        <!-- Header -->
+        <div class="mb-4">
 
-        <div>
-            <h1 class="text-4xl font-bold mb-1">
-                Movie Manager
-            </h1>
+            <!-- Add Button -->
 
-            <p class="text-muted">
-                Manage your movie collection
-            </p>
+            <a asp-action="Create"
+            class="btn btn-success rounded-circle shadow d-flex align-items-center justify-content-center"
+            style="width:60px;height:60px;">
+
+                <i class="bi bi-plus-lg text-white fs-4"></i>
+
+            </a>
+
         </div>
-
-        <!-- Add Button -->
-        <a asp-action="Create"
-           class="btn btn-success rounded-circle shadow d-flex align-items-center justify-content-center"
-           style="width:60px;height:60px;">
-
-            <i class="bi bi-plus-lg text-white fs-4"></i>
-
-        </a>
-
-    </div>
-
+    }
     <!-- Table -->
     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
@@ -92,7 +93,10 @@
                         <th>Genre</th>
                         <th>Rating</th>
                         <th>Release Year</th>
-                        <th class="text-center">Actions</th>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <th class="text-center">Actions</th>
+                        }
                     </tr>
 
                 </thead>
@@ -111,7 +115,8 @@
                     {
                         @foreach (var movie in Model)
                         {
-                            <tr>
+                            <tr class="clickable-row"
+                                onclick="window.location='@Url.Action("Details", "MovieModels", new { id = movie.Id })'">
 
                                 <!-- Poster -->
                                 <td>
@@ -144,45 +149,47 @@
                                     @movie.ReleaseYear
                                 </td>
 
-                               <!-- Actions -->
-                                <td class="text-center">
+                                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                {
+                                    <!-- Actions -->
+                                    <td class="text-center">
 
-                                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
 
-                                        <!-- Details -->
-                                        <a asp-action="Details"
-                                           asp-route-id="@movie.Id"
-                                           class="btn btn-primary btn-sm shadow-sm d-flex align-items-center gap-2">
+                                            <!-- Details -->
+                                            <a asp-action="Details"
+                                            asp-route-id="@movie.Id"
+                                            class="btn btn-primary btn-sm shadow-sm d-flex align-items-center gap-2">
 
-                                            <i class="bi bi-eye-fill"></i>
-                                            <span>Details</span>
+                                                <i class="bi bi-eye-fill"></i>
+                                                <span>Details</span>
 
-                                        </a>
+                                            </a>
 
-                                        <!-- Edit -->
-                                        <a asp-action="Edit"
-                                           asp-route-id="@movie.Id"
-                                           class="btn btn-warning btn-sm shadow-sm d-flex align-items-center gap-2">
+                                            <!-- Edit -->
+                                            <a asp-action="Edit"
+                                            asp-route-id="@movie.Id"
+                                            class="btn btn-warning btn-sm shadow-sm d-flex align-items-center gap-2">
 
-                                            <i class="bi bi-pencil-fill text-white"></i>
-                                            <span class="text-white">Edit</span>
+                                                <i class="bi bi-pencil-fill text-white"></i>
+                                                <span class="text-white">Edit</span>
 
-                                        </a>
+                                            </a>
 
-                                        <!-- Delete -->
-                                        <a asp-action="Delete"
-                                           asp-route-id="@movie.Id"
-                                           class="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-2">
+                                            <!-- Delete -->
+                                            <a asp-action="Delete"
+                                            asp-route-id="@movie.Id"
+                                            class="btn btn-danger btn-sm shadow-sm d-flex align-items-center gap-2">
 
-                                            <i class="bi bi-trash-fill"></i>
-                                            <span>Delete</span>
+                                                <i class="bi bi-trash-fill"></i>
+                                                <span>Delete</span>
 
-                                        </a>
+                                            </a>
 
-                                    </div>
+                                        </div>
 
-                            </td>   
-
+                                    </td>   
+                                }
 
                             </tr>
                         }

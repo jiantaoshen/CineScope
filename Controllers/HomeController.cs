@@ -18,43 +18,11 @@ namespace CineScope.Controllers
         public async Task<IActionResult> Index()
         {
             var latestMovies = await _context.MovieModel
-                .OrderByDescending(m => m.Id) // or use CreatedDate if you have it
+                .OrderByDescending(m => m.ReleaseYear)
                 .Take(5)
                 .ToListAsync();
 
             return View(latestMovies);
-        }
-
-        public async Task<IActionResult> Movies(string searchString,string genre,int page = 1)
-        {
-            var query = _context.MovieModel.AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                query = query.Where(m => m.Title.Contains(searchString));
-            }
-
-            if (!string.IsNullOrEmpty(genre))
-            {
-                query = query.Where(m => m.Genre == genre);
-            }
-
-            ViewBag.Genres = await _context.MovieModel
-                .Select(m => m.Genre)
-                .Distinct()
-                .ToListAsync();
-
-            return View(await query.ToListAsync());
-        }
-
-        public IActionResult Genres()
-        {
-            return View();
-        }
-
-        public IActionResult TVShows()
-        {
-            return View();
         }
 
         public IActionResult About()
