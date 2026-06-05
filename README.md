@@ -22,11 +22,9 @@ CineScope is an ASP.NET Core MVC movie catalog application that allows users to 
 - Search movies by title
 - Filter movies by genre
 - View movie details
-- View latest movie releases
 
 ### Members
 - Register and log in
-- Access member-only features
 - Future support for:
   - Favorites
   - Ratings
@@ -79,27 +77,6 @@ The application uses Entity Framework Core with SQL Server.
 - AspNetRoleClaims
 - AspNetUserLogins
 - AspNetUserTokens
-
----
-
-## Roles
-
-### Member
-Default role assigned after registration.
-
-Permissions:
-- Browse movies
-- Search movies
-- Future support for reviews, ratings, and favorites
-
-### Admin
-
-Permissions:
-- Create movies
-- Edit movies
-- Delete movies
-- Manage users
-- Manage roles
 
 ---
 
