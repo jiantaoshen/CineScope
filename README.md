@@ -8,9 +8,10 @@ CineScope is an ASP.NET Core MVC movie catalog application that allows users to 
 1. Clone the repository and open the solution in Visual Studio.
 2. Install SQL Server Developer Edition or use an existing SQL Server instance.
 3. Install SQL Server Management Studio (SSMS) in Visual Studio Installer for database management.
-4. Run `update-database` in the Package Manager Console to apply the migration and create the database and tables.
-5. Uncomment the function `using (var scope = app.Services.CreateScope()){...}` in `Program.cs` to seed the database with initial data.
-6. Start the application.
+4. Run `Add-Migration UpdateMovieModel` in the Package Manager Console to create the initial migration for the database schema.
+5. Run `update-database` in the Package Manager Console to apply the migration and create the database and tables.
+6. Uncomment the function `using (var scope = app.Services.CreateScope()){...}` in `Program.cs` to seed the database with initial data.
+7. Start the application.
 
 ---
 
